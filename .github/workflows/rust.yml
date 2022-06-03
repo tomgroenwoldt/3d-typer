@@ -2,9 +2,9 @@ name: Rust
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 env:
   CARGO_TERM_COLOR: always
@@ -19,19 +19,19 @@ jobs:
         run: |
           rustup update
           rustup component add clippy
-          rustup install nightly                   
+          rustup install nightly
         working-directory: backend
-      
+
       - name: Lint
         run: |
           cargo fmt -- --check
-          cargo clippy -- -D warnings          
+          cargo clippy -- -D warnings
         working-directory: backend
-      
+
       - name: Test
         run: |
           cargo check
-          cargo test --all          
+          cargo test --all
         working-directory: backend
 
       - name: Build
