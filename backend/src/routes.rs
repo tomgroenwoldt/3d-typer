@@ -1,8 +1,14 @@
 use rocket::{
-    tokio::{select, sync::broadcast::{error::RecvError, Sender}},
-    Shutdown,
-    State,
-    response::{status, stream::{Event, EventStream}}, serde::json::Json
+    response::{
+        status,
+        stream::{Event, EventStream},
+    },
+    serde::json::Json,
+    tokio::{
+        select,
+        sync::broadcast::{error::RecvError, Sender},
+    },
+    Shutdown, State,
 };
 
 use crate::Message;
@@ -30,7 +36,7 @@ pub async fn events(queue: &State<Sender<Message>>, mut end: Shutdown) -> EventS
 
 /// Receive a message from a form submission and broadcast it to any receivers.
 #[post("/message", data = "<message>")]
-pub fn post(message: Json<Message>, queue: &State<Sender<Message>>) -> status::Accepted<&str>{
+pub fn post(message: Json<Message>, queue: &State<Sender<Message>>) -> status::Accepted<&str> {
     // A send 'fails' if there are no active subscribers. That's okay.
     let _res = queue.send(message.into_inner());
     status::Accepted(Some("OK"))

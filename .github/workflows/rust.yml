@@ -18,8 +18,10 @@ jobs:
       - name: Update local toolchain
         run: |
           rustup update
-          rustup component add clippy
           rustup install nightly
+          rustup default nightly
+          rustup component add rustfmt
+          rustup component add clippy
         working-directory: backend
 
       - name: Lint

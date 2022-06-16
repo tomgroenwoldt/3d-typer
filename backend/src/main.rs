@@ -1,6 +1,6 @@
 #[macro_use]
 extern crate rocket;
-use rocket::{tokio::sync::broadcast::channel};
+use rocket::tokio::sync::broadcast::channel;
 
 mod message;
 mod routes;
@@ -14,10 +14,10 @@ fn rocket() -> _ {
     use rocket::http::Header;
     use rocket::{Request, Response};
 
-    pub struct CORS;
+    pub struct Cors;
 
     #[rocket::async_trait]
-    impl Fairing for CORS {
+    impl Fairing for Cors {
         fn info(&self) -> Info {
             Info {
                 name: "Add CORS headers to responses",
@@ -39,5 +39,5 @@ fn rocket() -> _ {
     rocket::build()
         .manage(channel::<Message>(1024).0)
         .mount("/", routes![post, events])
-        .attach(CORS)
+        .attach(Cors)
 }
