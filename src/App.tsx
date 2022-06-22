@@ -10,7 +10,7 @@ type Message = {
 
 const message: Message = {
   room: "lobby",
-  username: "guest",
+  username: "username",
   position: 0,
 };
 
