@@ -15,7 +15,7 @@ const message: Message = {
 };
 
 async function send() {
-  await fetch("http://127.0.0.1:8000/message", {
+  await fetch("http://tomgroenwoldt.de/message", {
     method: "POST",
     body: JSON.stringify(message),
   });
