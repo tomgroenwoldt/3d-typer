@@ -1,2 +1,5 @@
 [default]
 secret_key = "L4zT/2QSQetKMaxN3g2PRoTu8r+A4pVUtw6B1zZRScI="
+
+[production]
+address = "tomgroenwoldt.de"
