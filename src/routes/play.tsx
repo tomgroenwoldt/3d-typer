@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { TextField } from "@mui/material";
-import "./App.css";
+import "./play.css";
 
 type Message = {
   room: string,
@@ -15,13 +15,13 @@ const message: Message = {
 };
 
 async function send() {
-  await fetch("http://tomgroenwoldt.de:8000/message", {
+  await fetch("http://localhost:8000/message", {
     method: "POST",
     body: JSON.stringify(message),
   });
 }
 
-function App() {
+export default function Play() {
 
   const [sampleText, setSampleText] = useState(
     "You clearly don't know who you're talking to, so let me clue you in."); // I am not in danger, Skyler. I am the danger. A guy opens his door and gets shot and you think that of me? No. I am the one who knocks!";
@@ -76,5 +76,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
