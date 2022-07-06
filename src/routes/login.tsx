@@ -1,17 +1,20 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import authenticate from "../auth";
 
 function Copyright() {
   return (
@@ -29,18 +32,29 @@ function Copyright() {
 const theme = createTheme();
 
 export default function Login() {
-    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        const response = await fetch("http://localhost:8000/login", {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            body: new FormData(event.currentTarget)
-        });
-        return response.json();
-    }
+  const [isAuthenticated, setAuthentication] = useState(false);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    authenticate(setAuthentication);
+  }, []);
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    await fetch("http://localhost:8000/login", {
+      method: "POST",
+      mode: "cors",
+      credentials: "include",
+      body: new FormData(event.currentTarget),
+      headers: {
+        Accept: "application/json",
+      },
+    }).catch((err) => {
+      console.log("Error logging in: " + err);
+    });
+    navigate("/play");
+  }
+  if (isAuthenticated) {
     return (
       <div>
         ALREADY LOGGED IN, go <Link href="/play">play!</Link>

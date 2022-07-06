@@ -1,5 +1,4 @@
 import ReactDOM from "react-dom/client";
-import App from "./application";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Play from "./routes/play";
 import Login from "./routes/login";
@@ -11,10 +10,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="login" element={<Login />} />
       <Route path="signup" element={<SignUp />} />
-      <Route path="play" element={<Play />} />
+      <Route path="/" element={<Play />} />
+      <Route path="login" element={<Login />} />
     </Routes>
   </BrowserRouter>
 );
