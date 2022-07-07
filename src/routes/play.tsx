@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { TextField } from "@mui/material";
-import "./App.css";
+import authenticate from "../auth";
 
 type Message = {
-  room: string,
-  username: string,
-  position: number,
+  room: string;
+  username: string;
+  position: number;
 };
 
 const message: Message = {
@@ -15,29 +15,31 @@ const message: Message = {
 };
 
 async function send() {
-  await fetch("http://tomgroenwoldt.de:8000/message", {
+  await fetch("http://localhost:8000/message", {
     method: "POST",
     body: JSON.stringify(message),
   });
 }
 
-function App() {
-
+export default function Play() {
+  const [isAuthenticated, setAuthentication] = useState(false);
   const [sampleText, setSampleText] = useState(
-    "You clearly don't know who you're talking to, so let me clue you in."); // I am not in danger, Skyler. I am the danger. A guy opens his door and gets shot and you think that of me? No. I am the one who knocks!";
+    "You clearly don't know who you're talking to, so let me clue you in."
+  ); // I am not in danger, Skyler. I am the danger. A guy opens his door and gets shot and you think that of me? No. I am the one who knocks!";
   const [currentWord, setCurrentWord] = useState("");
   const [spaceAsNextWord, setSpaceAsNextWord] = useState(true);
 
   useEffect(() => {
-    init();
+    init_playground();
+    authenticate(setAuthentication);
   }, []);
 
-  function init() {
+  async function init_playground(): Promise<void> {
     setCurrentWord(sampleText.split(" ")[0]);
     setSampleText(sampleText.split(" ").slice(1).join(" "));
   }
 
-  function setWord() {
+  function setWord(): void {
     if (spaceAsNextWord) {
       setCurrentWord(" ");
       setSpaceAsNextWord(false);
@@ -49,15 +51,13 @@ function App() {
       setSampleText(sampleText.split(" ").slice(1).join(" "));
       setSpaceAsNextWord(true);
     }
-  }
 
-  function validate(e: { target: { value: string } }) {
+  function validate(e: { target: { value: string } }): void {
     if (currentWord !== "THE_END") {
       validateWord(e);
     }
-  }
 
-  function validateWord(e: { target: { value: string } }) {
+  function validateWord(e: { target: { value: string } }): void {
     if (e.target.value === currentWord) {
       message.position += currentWord.length;
       send();
@@ -66,7 +66,9 @@ function App() {
     }
   }
 
-
+  if (!isAuthenticated) {
+    return <></>;
+  }
   return (
     <div className="App">
       <header className="App-header">
@@ -76,5 +78,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
