@@ -1,4 +1,8 @@
-export default async function authenticate(
+export interface AuthenticationProps {
+	setAuthentication?: (authenticated: boolean) => void;
+}
+
+export async function authenticate(
 	setAuthentication: (data: boolean) => void
 ): Promise<void> {
 	await fetch("http://localhost:8000/authenticate", {

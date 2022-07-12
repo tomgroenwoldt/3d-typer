@@ -1,6 +1,17 @@
-import { useState, useEffect, FunctionComponent } from "react";
-import { TextField } from "@mui/material";
-import authenticate from "../auth";
+import { useState, useEffect } from "react";
+import {
+	Container,
+	createTheme,
+	CssBaseline,
+	TextField,
+	ThemeProvider,
+} from "@mui/material";
+import { authenticate } from "../auth";
+import Login from "./login";
+import Logout from "./logout";
+import { Box } from "@mui/system";
+
+const theme = createTheme();
 
 type Message = {
 	room: string;
@@ -69,14 +80,29 @@ export default function Play(): JSX.Element {
 	}
 
 	if (!isAuthenticated) {
-		return <></>;
+		return <Login setAuthentication={setAuthentication} />;
 	}
 	return (
-		<div className="App">
-			<header className="App-header">
-				<div className="text">{currentWord + " " + sampleText}</div>
-				<TextField onChange={validate} label="type here" />
-			</header>
-		</div>
+		<ThemeProvider theme={theme}>
+			<Container
+				component="main"
+				maxWidth="sm"
+				sx={{
+					marginTop: 8,
+					display: "flex",
+					flexDirection: "column",
+					alignItems: "center",
+				}}>
+				<CssBaseline />
+				<Box
+					sx={{
+						fontSize: 35,
+					}}>
+					{currentWord + " " + sampleText}
+				</Box>
+				<TextField fullWidth onChange={validate} label="type here" />
+				<Logout setAuthentication={setAuthentication} />
+			</Container>
+		</ThemeProvider>
 	);
 }
