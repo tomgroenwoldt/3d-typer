@@ -12,121 +12,122 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://tomgroenwoldt.de/">
-        tomgroenwoldt.de
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
+	return (
+		<Typography variant="body2" color="text.secondary" align="center">
+			{"Copyright © "}
+			<Link color="inherit" href="https://tomgroenwoldt.de/">
+				tomgroenwoldt.de
+			</Link>{" "}
+			{new Date().getFullYear()}
+			{"."}
+		</Typography>
+	);
 }
 
 const theme = createTheme();
 
-export default function SignUp() {
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const response = await fetch("http://localhost:8000/signup", {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
-      body: new FormData(event.currentTarget),
-    });
-    return response.json();
-  }
+export default function SignUp(): JSX.Element {
+	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+		event.preventDefault();
+		const response = await fetch("http://localhost:8000/signup", {
+			method: "POST",
+			mode: "cors",
+			cache: "no-cache",
+			credentials: "same-origin",
+			body: new FormData(event.currentTarget),
+		});
+		return response.json();
+	}
 
-  return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <Box
-            component="form"
-            id="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/login" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-        <Copyright />
-      </Container>
-    </ThemeProvider>
-  );
+	return (
+		<ThemeProvider theme={theme}>
+			<Container component="main" maxWidth="xs">
+				<CssBaseline />
+				<Box
+					sx={{
+						marginTop: 8,
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+					}}>
+					<Avatar
+						sx={{
+							m: 1,
+							bgcolor: "secondary.main",
+						}}>
+						<LockOutlinedIcon />
+					</Avatar>
+					<Typography component="h1" variant="h5">
+						Sign up
+					</Typography>
+					<Box
+						component="form"
+						id="form"
+						noValidate
+						onSubmit={handleSubmit}
+						sx={{ mt: 3 }}>
+						<Grid container spacing={2}>
+							<Grid item xs={12} sm={6}>
+								<TextField
+									autoComplete="given-name"
+									name="firstName"
+									required
+									fullWidth
+									id="firstName"
+									label="First Name"
+									autoFocus
+								/>
+							</Grid>
+							<Grid item xs={12} sm={6}>
+								<TextField
+									required
+									fullWidth
+									id="lastName"
+									label="Last Name"
+									name="lastName"
+									autoComplete="family-name"
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField
+									required
+									fullWidth
+									id="email"
+									label="Email Address"
+									name="email"
+									autoComplete="email"
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField
+									required
+									fullWidth
+									name="password"
+									label="Password"
+									type="password"
+									id="password"
+									autoComplete="new-password"
+								/>
+							</Grid>
+						</Grid>
+						<Button
+							type="submit"
+							fullWidth
+							variant="contained"
+							sx={{ mt: 3, mb: 2 }}>
+							Sign Up
+						</Button>
+						<Grid container justifyContent="flex-end">
+							<Grid item>
+								<Link href="/login" variant="body2">
+									Already have an account? Sign in
+								</Link>
+							</Grid>
+						</Grid>
+					</Box>
+				</Box>
+				<Copyright />
+			</Container>
+		</ThemeProvider>
+	);
 }
