@@ -8,7 +8,7 @@ const theme = createTheme();
 
 export default function Logout(props: AuthenticationProps): JSX.Element {
 	async function logout() {
-		await fetch("http://localhost:8000/logout", {
+		await fetch("http://" + process.env.REACT_APP_HOST + ":8000/logout", {
 			method: "GET",
 			mode: "cors",
 			credentials: "include",
