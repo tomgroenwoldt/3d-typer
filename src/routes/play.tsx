@@ -26,7 +26,7 @@ const message: Message = {
 };
 
 async function send() {
-	await fetch("http://localhost:8000/message", {
+	await fetch("http://" + process.env.REACT_APP_HOST + ":8000/message", {
 		method: "POST",
 		body: JSON.stringify(message),
 	});

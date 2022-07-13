@@ -2,6 +2,8 @@
 secret_key = "L4zT/2QSQetKMaxN3g2PRoTu8r+A4pVUtw6B1zZRScI="
 address = "127.0.0.1"
 port = 8000
+domain = "localhost:3000"
 
 [release]
 address = "85.214.213.49"
+domain = "tomgroenwoldt.de:80"

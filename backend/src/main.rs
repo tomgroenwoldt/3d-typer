@@ -3,18 +3,14 @@ extern crate rocket;
 extern crate dotenv;
 
 use dotenv::dotenv;
-use rocket::{
-    fairing::{Fairing, Info, Kind},
-    http::Header,
-    tokio::sync::broadcast::channel,
-    Request, Response,
-};
+use rocket::tokio::sync::broadcast::channel;
 
 mod message;
 mod routes;
 
 use message::Message;
 use rocket_auth::{Error, Users};
+use rocket_cors::{AllowedOrigins, CorsOptions};
 use routes::{auth::*, message::*};
 
 pub async fn create_authentication_pool() -> Result<Users, Error> {
@@ -27,39 +23,28 @@ pub async fn create_authentication_pool() -> Result<Users, Error> {
 
 #[launch]
 async fn rocket() -> _ {
-    pub struct Cors;
+    let rocket = rocket::build();
+    let figment = rocket.figment();
+    let domain: String = figment.extract_inner("domain").expect("domain");
+    let origin = [format!("http://{}", domain)];
 
-    #[rocket::async_trait]
-    impl Fairing for Cors {
-        fn info(&self) -> Info {
-            Info {
-                name: "CORS",
-                kind: Kind::Response,
-            }
-        }
-
-        async fn on_response<'r>(&self, _request: &'r Request<'_>, response: &mut Response<'r>) {
-            response.set_header(Header::new(
-                "Access-Control-Allow-Origin",
-                "http://localhost:3000",
-            ));
-            response.set_header(Header::new(
-                "Access-Control-Allow-Methods",
-                "POST, GET, PATCH, OPTIONS",
-            ));
-            response.set_header(Header::new("Access-Control-Allow-Headers", "*"));
-            response.set_header(Header::new("Access-Control-Allow-Credentials", "true"));
-        }
+    // CORS setup
+    let cors = CorsOptions {
+        allowed_origins: AllowedOrigins::some_exact(&origin),
+        allow_credentials: true,
+        ..Default::default()
     }
+    .to_cors()
+    .expect("Error setting up CORS");
 
     let users = create_authentication_pool().await;
 
-    rocket::build()
+    rocket
         .mount(
             "/",
             routes![post, events, login, logout, signup, authenticate],
         )
         .manage(users.unwrap())
         .manage(channel::<Message>(1024).0)
-        .attach(Cors)
+        .attach(cors)
 }

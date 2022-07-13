@@ -32,7 +32,7 @@ jobs:
           override: true
           components: clippy
       - name: Lint
-        run: cargo clippy
+        run: cargo clippy --no-deps -- -D warnings
         working-directory: backend/
 
   build-and-deploy:

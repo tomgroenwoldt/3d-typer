@@ -33,7 +33,7 @@ export default function Login(props: AuthenticationProps): JSX.Element {
 
 	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
-		await fetch("http://localhost:8000/login", {
+		await fetch("http://" + process.env.REACT_APP_HOST + ":8000/login", {
 			method: "POST",
 			mode: "cors",
 			credentials: "include",

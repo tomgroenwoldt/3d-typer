@@ -29,13 +29,16 @@ const theme = createTheme();
 export default function SignUp(): JSX.Element {
 	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
-		const response = await fetch("http://localhost:8000/signup", {
-			method: "POST",
-			mode: "cors",
-			cache: "no-cache",
-			credentials: "same-origin",
-			body: new FormData(event.currentTarget),
-		});
+		const response = await fetch(
+			"http://" + process.env.REACT_APP_HOST + ":8000/signup",
+			{
+				method: "POST",
+				mode: "cors",
+				cache: "no-cache",
+				credentials: "same-origin",
+				body: new FormData(event.currentTarget),
+			}
+		);
 		return response.json();
 	}
 
