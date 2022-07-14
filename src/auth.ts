@@ -5,7 +5,7 @@ export interface AuthenticationProps {
 export async function authenticate(
 	setAuthentication: (data: boolean) => void
 ): Promise<void> {
-	await fetch("http://" + process.env.REACT_APP_HOST + ":8000/authenticate", {
+	await fetch("https://" + process.env.REACT_APP_HOST + ":8000/authenticate", {
 		method: "GET",
 		mode: "cors",
 		credentials: "include",

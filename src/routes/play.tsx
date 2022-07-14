@@ -26,7 +26,7 @@ const message: Message = {
 };
 
 async function send() {
-	await fetch("http://" + process.env.REACT_APP_HOST + ":8000/message", {
+	await fetch("https://" + process.env.REACT_APP_HOST + ":8000/message", {
 		method: "POST",
 		body: JSON.stringify(message),
 	});
@@ -79,6 +79,9 @@ export default function Play(): JSX.Element {
 		}
 	}
 
+	if (window.location.href.includes("www.")) {
+		window.location.href = window.location.href.replace("www.", "");
+	}
 	if (!isAuthenticated) {
 		return <Login setAuthentication={setAuthentication} />;
 	}

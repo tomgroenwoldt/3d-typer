@@ -30,7 +30,7 @@ export default function SignUp(): JSX.Element {
 	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 		const response = await fetch(
-			"http://" + process.env.REACT_APP_HOST + ":8000/signup",
+			"https://" + process.env.REACT_APP_HOST + ":8000/signup",
 			{
 				method: "POST",
 				mode: "cors",
@@ -42,6 +42,9 @@ export default function SignUp(): JSX.Element {
 		return response.json();
 	}
 
+	if (window.location.href.includes("www.")) {
+		window.location.href = window.location.href.replace("www.", "");
+	}
 	return (
 		<ThemeProvider theme={theme}>
 			<Container component="main" maxWidth="xs">

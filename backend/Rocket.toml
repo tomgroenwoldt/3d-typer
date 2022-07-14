@@ -4,6 +4,14 @@ address = "127.0.0.1"
 port = 8000
 domain = "localhost:3000"
 
+[debug.tls]
+certs = "certs/localhost.pem"
+key = "certs/localhost-key.pem"
+
 [release]
 address = "85.214.213.49"
-domain = "tomgroenwoldt.de:80"
+domain = "tomgroenwoldt.de:443"
+
+[release.tls]
+certs = "certs/fullchain.pem"
+key = "certs/privkey.pem"

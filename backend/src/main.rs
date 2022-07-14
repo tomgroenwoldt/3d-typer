@@ -26,7 +26,7 @@ async fn rocket() -> _ {
     let rocket = rocket::build();
     let figment = rocket.figment();
     let domain: String = figment.extract_inner("domain").expect("domain");
-    let origin = [format!("http://{}", domain)];
+    let origin = [format!("https://{}", domain)];
 
     // CORS setup
     let cors = CorsOptions {

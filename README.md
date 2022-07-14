@@ -16,3 +16,10 @@ inside the [React](https://reactjs.org/) framework.
 
 The backend consists of a simple HTTP server built with [Rocket](https://rocket.rs/). In the near future a
 relational database will be added to the stack.
+
+##### Development Setup
+
+###### Local Certificate
+
+Install `mkcert`. Run `mkcert -install` and `mkcert localhost 127.0.0.1 ::1`. Afterwards
+copy certificate and key into the `backend/cert/` directory.
